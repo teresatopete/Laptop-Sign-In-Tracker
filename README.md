@@ -68,7 +68,6 @@ ul li.checked::before {
   width: 7px;
 }
 
-/* Style the close button */
 .close {
   position: absolute;
   right: 0;
@@ -89,14 +88,12 @@ ul li.checked::before {
   text-align: center;
 }
 
-/* Clear floats after the header */
 .header:after {
   content: "";
   display: table;
   clear: both;
 }
 
-/* Style the input */
 input {
   margin: 0;
   border: none;
@@ -107,7 +104,6 @@ input {
   font-size: 16px;
 }
 
-/* Style the "Add" button */
 .addBtn {
   padding: 10px;
   width: 25%;
@@ -150,7 +146,6 @@ for (i = 0; i < myNodelist.length; i++) {
   myNodelist[i].appendChild(span);
 }
 
-// Click on a close button to hide the current list item
 var close = document.getElementsByClassName("close");
 var i;
 for (i = 0; i < close.length; i++) {
@@ -160,7 +155,6 @@ for (i = 0; i < close.length; i++) {
   }
 }
 
-// Add a "checked" symbol when clicking on a list item
 var list = document.querySelector('ul');
 list.addEventListener('click', function(ev) {
   if (ev.target.tagName === 'LI') {
@@ -168,7 +162,6 @@ list.addEventListener('click', function(ev) {
   }
 }, false);
 
-// Create a new list item when clicking on the "Add" button
 function newElement() {
   var li = document.createElement("li");
   var inputValue = document.getElementById("myInput").value;
