@@ -1,4 +1,5 @@
 TO DO LIST
+Follow firebase p5 tutorial! (everyone)
 main communicator with Ms. Fierro and add to the front end (Addison)
 research HTML styles (Danielle)
 draft an automatic email for overdue laptops (Teresa)
