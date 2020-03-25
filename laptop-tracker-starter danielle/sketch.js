@@ -1,60 +1,92 @@
-// Title: Bunch o' Dots
-// Imagined, Designed, and Programmed by: Matthew Drew
-// Date: 10/25/18
-// Description: It's a circle packing function, with grayscale colors assigned to the different sizes of circle.
-// Sources of ideas and inspiration (title, author, URL):
-//  * "List of FIFA World Cup Official Match Balls" Wikipedia https://en.wikipedia.org/wiki/List_of_FIFA_World_Cup_official_match_balls
-//  * "Random Circles, No Overlap" The Coding Train https://www.youtube.com/watch?v=XATr_jdh-44&t=543s"
-//  *
-//
-// Includes code from (title, author, URL):
-//  * "Random Circles, No Overlap" The Coding Train https://www.youtube.com/watch?v=XATr_jdh-44&t=543s"
-//  *
-//  *
-// */
 
-var circles = []; //sets the variable of "circles" as an empty array
+
+// Daniel Shiffman
+// http://codingtra.in
+// http://patreon.com/codingtrain
+// Code for: https://youtu.be/NcewaPfFR6Y
+
+var canvas;
+var score;
+var button;
+var initialInput;
+var submitButton;
+var database;
 
 function setup() {
-  createCanvas(640, 360);
+  canvas = createCanvas(100, 100);
+  canvas.parent('game');
+  score = 0;
+  createP('Click the button to get points.').parent('game');
+  button = createButton('click');
+  button.mousePressed(increaseScore);
+  button.parent('game');
+  initialInput = createInput('initials');
+  initialInput.parent('game');
+  submitButton = createButton('submit');
+  submitButton.parent('game');
+  submitButton.mousePressed(submitScore);
 
-var overlapping = false;
+  var config = {
+    apiKey: "AIzaSyDsJ73sg9CjbMj08ibW8KuTYQ4WfV3faSM",
+    authDomain: "my-not-awesome-project.firebaseapp.com",
+    databaseURL: "https://my-not-awesome-project.firebaseio.com",
+    storageBucket: "my-not-awesome-project.appspot.com",
+    messagingSenderId: "583703514528"
+  };
+  firebase.initializeApp(config);
+  database = firebase.database();
 
-var safe = 0; //creates variable to break function
+  var ref = database.ref('scores');
+  ref.on('value', gotData, errData);
+}
 
-	while (circles.length < 1000) { //500 tells the function how many circles to attempt to print
-		var circle = {
-			x: random(width),
-			y: random(height),
-			r: random(10,30)
-		}
+function gotData(data) {
 
-		var overlapping = false; //sets the variable of overlapping
+  var scorelistings = selectAll('.scorelisting');
+  for (var i = 0; i < scorelistings.length; i++) {
+    scorelistings[i].remove();
+  }
 
-		for (var j = 0; j < circles.length; j++) {
-			var other = circles[j];
-			var d = dist(circle.x, circle.y, other.x, other.y);
-			if (d < circle.r + other.r) {
-				overlapping = true; //this refers to the fact that if the circles are overlapping, then break the function and start again
-				break;
-			}
-		}
-
-		if (!overlapping) {
-		circles.push(circle); //this tells the function that if the circles are overlapping, do not put a circle in that position
-	}
-
-  safe++;
-  if (safe > 30000){  //these lines of code tell the function that if you run the code 10000 times and still can't find a place for every circle, then stop the code
-    break;
+  //console.log(data.val());
+  var scores = data.val();
+  var keys = Object.keys(scores);
+  //console.log(keys);
+  for (var i = 0; i < keys.length; i++) {
+    var k = keys[i];
+    var initials = scores[k].initials;
+    var score = scores[k].score;
+    //console.log(initials, score);
+    var li = createElement('li', initials + ': ' + score);
+    li.class('scorelisting');
+    li.parent('scorelist');
   }
 }
 
-    for (var i = 0; i < circles.length; i++) {
-      var grayvalues = 255/circles.length; //splits the grayvalues into different colors determined by the circle radius
-      var steps = size/circles.length;
-        stroke(51);
-        fill(i*grayvalues); //fills the circles with the assigned grayvalue
-        ellipse(circles[i].x, circles[i].y, circles[i].r*2, circles[i].r*2);
-	}
- }
+function errData(err) {
+  console.log('Error!');
+  console.log(err);
+}
+
+
+function submitScore() {
+  var data = {
+    initials: initialInput.value(),
+    score: score
+  }
+  console.log(data);
+  var ref = database.ref('scores');
+  var result = ref.push(data);
+  console.log(result.key);
+}
+
+function increaseScore() {
+  score++;
+}
+
+function draw() {
+  background(0);
+  textAlign(CENTER);
+  textSize(32);
+  fill(255);
+  text(score, width / 2, height / 2);
+}
