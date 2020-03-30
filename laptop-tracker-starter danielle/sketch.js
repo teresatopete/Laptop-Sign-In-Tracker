@@ -20,11 +20,11 @@ function setup() {
   submitButton.mousePressed(submitScore);
 
   var config = {
-    apiKey: "AIzaSyDsJ73sg9CjbMj08ibW8KuTYQ4WfV3faSM",
-    authDomain: "my-not-awesome-project.firebaseapp.com",
-    databaseURL: "https://my-not-awesome-project.firebaseio.com",
-    storageBucket: "my-not-awesome-project.appspot.com",
-    messagingSenderId: "583703514528"
+    apiKey: "AIzaSyBVeaJnUZTjobwiVFD_cow0pY9AiTijXNE",
+    authDomain: "laptop-charger-tracker.firebaseapp.com",
+    databaseURL: "https://laptop-charger-tracker.firebaseio.com",
+    storageBucket: "laptop-charger-tracker.appspot.com",
+    messagingSenderId: "965113615786"
   };
   firebase.initializeApp(config);
   database = firebase.database();
