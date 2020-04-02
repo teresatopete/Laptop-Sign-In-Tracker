@@ -26,7 +26,17 @@ function setup() {
     measurementId: "G-QQN1ZCH0YB"
   };
   firebase.initializeApp(config);
-  database = firebase.database();
+  //database = firebase.database();
+  console.log(firebase);
+
+  var database = firebase.database();
+  var ref = database.ref('scores');
+
+  var data = {
+    name: "DAT",
+    score: 12
+  }
+  ref.push(data);
 }
 
 function submitScore() {
@@ -36,7 +46,7 @@ function submitScore() {
   }
   console.log(data);
   var ref = database.ref('scores');
-  ref.push(data);
+ ref.push(data);
 }
 
 function increaseScore() {
