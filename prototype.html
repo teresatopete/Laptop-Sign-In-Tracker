@@ -104,6 +104,7 @@ input {
   font-size: 16px;
 }
 
+
 .addBtn {
   padding: 10px;
   width: 25%;
@@ -126,8 +127,10 @@ input {
 
 <div id="myDIV" class="header">
   <h2 style="margin:5px">Chargers and Laptops</h2>
-  <input type="text" id="myInput" placeholder="Title...">
-  <span onclick="newElement()" class="addBtn">Add</span>
+  <input type="text" id="myInput" placeholder="Name...">
+  <span1 onclick="newElement()" ></span1>
+  <input type="text" id="myInput" placeholder="Email address...">
+  <span2 onclick="newElement()" class="addBtn">Add</span2>
 </div>
 
 <ul id="myUL">
@@ -139,11 +142,15 @@ input {
 var myNodelist = document.getElementsByTagName("LI");
 var i;
 for (i = 0; i < myNodelist.length; i++) {
-  var span = document.createElement("SPAN");
+  var span1 = document.createElement("SPAN1");
+  var span2 = document.createElement("SPAN2");
   var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  myNodelist[i].appendChild(span);
+  span1.className = "close";
+  span1.appendChild(txt);
+  myNodelist[i].appendChild(span1);
+  span2.className = "close";
+  span2.appendChild(txt);
+  myNodelist[i].appendChild(span2);
 }
 
 var close = document.getElementsByClassName("close");
@@ -174,11 +181,16 @@ function newElement() {
   }
   document.getElementById("myInput").value = "";
 
-  var span = document.createElement("SPAN");
+  var span1 = document.createElement("SPAN");
   var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  li.appendChild(span);
+  span1.className = "close";
+  span1.appendChild(txt);
+  li.appendChild(span1);
+  var span2 = document.createElement("SPAN2");
+  var txt = document.createTextNode("\u00D7");
+  span2.className = "close";
+  span2.appendChild(txt);
+  li.appendChild(span2);
 
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function() {
