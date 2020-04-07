@@ -9,13 +9,19 @@ function setup() {
   canvas = createCanvas(100, 100);
   canvas.parent('game');
   score = 0;
-  createP('Click the button to get points.').parent('game');
+  createP('Laptop Check Out.').parent('game');
   button = createButton('click');
   button.mousePressed(increaseScore);
   button.parent('game');
-  initialInput = createInput('initials');
+  initialInput = createInput('Name');
   initialInput.parent('game');
+  clikcbutton = createButton('click');
+  secondInput = createInput('Laptop number');
+  emailButton = createButton('submit');
   submitButton = createButton('submit');
+  clikctwobutton = createButton('click');
+  thirdInput = createInput('Return Date');
+  dateButton = createButton('submit');
   submitButton.parent('game');
   submitButton.mousePressed(submitScore);
 

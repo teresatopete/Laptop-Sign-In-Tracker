@@ -14,6 +14,7 @@ function setup() {
   initialInput = createInput('Name');
   submitButton = createButton('submit');
   submitButton.mousePressed(submitScore);
+  emailInput = createinput('Email');
 
   var config = {
     apiKey: "AIzaSyBVeaJnUZTjobwiVFD_cow0pY9AiTijXNE",
