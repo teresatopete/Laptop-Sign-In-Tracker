@@ -6,6 +6,14 @@ var submitButton;
 var database;
 
 function setup() {
+  canvas = createCanvas(100, 100);
+  emailButton = createButton('submit');
+  submitButton = createButton('submit');
+  clikctwobutton = createButton('click');
+  thirdInput = createInput('Return Date');
+  dateButton = createButton('submit');
+  submitButton.parent('game');
+  submitButton.mousePressed(submitScore);
 
   var config = {
     apiKey: "AIzaSyBVeaJnUZTjobwiVFD_cow0pY9AiTijXNE",

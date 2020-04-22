@@ -5,16 +5,16 @@ var initialInput;
 var submitButton;
 var database;
 
-function setup() {
-  canvas = createCanvas(100, 100);
-  score = 0;
-  createP('Sign In')
-  //button = createButton('date');
-  //button.mousePressed(increaseScore);
-  initialInput = createInput('Name');
-  submitButton = createButton('submit');
-  submitButton.mousePressed(submitScore);
-  emailInput = createinput('Email');
+
+  function setup() {
+    canvas = createCanvas(100, 100);
+    emailButton = createButton('submit');
+    submitButton = createButton('submit');
+    clikctwobutton = createButton('click');
+    thirdInput = createInput('Return Date');
+    dateButton = createButton('submit');
+    submitButton.parent('game');
+    submitButton.mousePressed(submitScore);
 
   var config = {
     apiKey: "AIzaSyBVeaJnUZTjobwiVFD_cow0pY9AiTijXNE",
