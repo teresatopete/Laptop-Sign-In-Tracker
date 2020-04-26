@@ -1,0 +1,123 @@
+# Laptop-Sign-In-Tracker
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="style.css">
+<title>Laptop Checkout</title>
+<style><h1 style="font-size:600%;">This is a heading</h1> body {padding: 0; margin: 0;} </style>
+<script src="libraries/p5.min.js"></script>
+<script src="libraries/p5.dom.min.js"></script>
+<script src="libraries/p5.sound.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/firebasejs/7.13.2/firebase.js"></script>
+<!-- <script src="sketch.js"></script> -->
+</head>
+<body onload="dataConnect()">
+
+  <script>
+ function dataConnect() {
+   var config = {
+     apiKey: "AIzaSyBVeaJnUZTjobwiVFD_cow0pY9AiTijXNE",
+     authDomain: "laptop-charger-tracker.firebaseapp.com",
+     databaseURL: "https://laptop-charger-tracker.firebaseio.com",
+     projectId: "laptop-charger-tracker",
+     storageBucket: "laptop-charger-tracker.appspot.com",
+     messagingSenderId: "965113615786",
+     appId: "1:965113615786:web:c13f336048ec7d02ba87d3",
+     measurementId: "G-QQN1ZCH0YB"
+   };
+
+   firebase.initializeApp(config);
+    database = firebase.database();
+ }
+ </script>
+
+<div id="myDIV" class="header">
+  <h2 style="margin:5px">Chargers and Laptops</h2>
+  <input type="text" id="nameInput" placeholder="Name...">
+  <span1 onclick="newElement()" ></span1>
+  <input type="text" id="emailInput" placeholder="Email address...">
+  <span2 onclick="newElement()" class="addBtn">Add</span2>
+</div>
+
+<ul id="myUL">
+  <li>List Names</li>
+
+</ul>
+
+<script>
+var myNodelist = document.getElementsByTagName("LI");
+var i;
+for (i = 0; i < myNodelist.length; i++) {
+  var span1 = document.createElement("SPAN1");
+  var span2 = document.createElement("SPAN2");
+  var txt = document.createTextNode("\u00D7");
+  span1.className = "close";
+  span1.appendChild(txt);
+  myNodelist[i].appendChild(span1);
+  span2.className = "close";
+  span2.appendChild(txt);
+  myNodelist[i].appendChild(span2);
+}
+
+var close = document.getElementsByClassName("close");
+var i;
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function() {
+    var div = this.parentElement;
+    div.style.display = "none";
+  }
+}
+
+var list = document.querySelector('ul');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'LI') {
+    ev.target.classList.toggle('checked');
+  }
+}, false);
+
+function newElement() {
+  var li = document.createElement("li");
+  var nameInputValue = document.getElementById("nameInput").value;
+  var emailInputValue = document.getElementById("emailInput").value;
+  var info = document.createTextNode(nameInputValue+ " "+emailInputValue);
+
+  var data = {
+    name: nameInputValue,
+    email: emailInputValue
+  }
+
+  console.log(data);
+  var ref = database.ref('borrowed-laptops');
+  ref.push(data);
+
+  li.appendChild(info);
+  if (nameInputValue === ''|| emailInputValue === '') { //
+    alert("Your form is missing information");
+  } else {
+    document.getElementById("myUL").appendChild(li);
+  }
+  document.getElementById("emailInput").value = "";
+
+  var span1 = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span1.className = "close";
+  span1.appendChild(txt);
+  li.appendChild(span1);
+  var span2 = document.createElement("SPAN2");
+  var txt = document.createTextNode("\u00D7");
+  span2.className = "close";
+  span2.appendChild(txt);
+  li.appendChild(span2);
+
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function() {
+      var div = this.parentElement;
+      div.style.display = "none";
+    }
+  }
+}
+</script>
+
+</body>
+</html>
