@@ -1,20 +1,19 @@
 var canvas;
-var score;
+var laptopNumber;
 var button;
+var laptopNumberInput;
 var initialInput;
 var submitButton;
 var database;
 
+function setup() {
+  // canvas = createCanvas(100, 100);
+  laptopNumber = "no laptop checked out";
 
-  function setup() {
-    canvas = createCanvas(100, 100);
-    emailButton = createButton('submit');
-    submitButton = createButton('submit');
-    clikctwobutton = createButton('click');
-    thirdInput = createInput('Return Date');
-    dateButton = createButton('submit');
-    submitButton.parent('game');
-    submitButton.mousePressed(submitScore);
+  initialInput = createInput('name');
+  laptopNumberInput = createInput('laptop number');
+  submitButton = createButton('borrow laptop');
+  submitButton.mousePressed(borrowLaptop);
 
   var config = {
     apiKey: "AIzaSyBVeaJnUZTjobwiVFD_cow0pY9AiTijXNE",
@@ -26,38 +25,29 @@ var database;
     appId: "1:965113615786:web:c13f336048ec7d02ba87d3",
     measurementId: "G-QQN1ZCH0YB"
   };
+
   firebase.initializeApp(config);
-  //database = firebase.database();
-  console.log(firebase);
+   database = firebase.database();
+ }
 
-  var database = firebase.database();
-  var ref = database.ref('scores');
+ function borrowLaptop() {
+   var data = {
+     initials: initialInput.value(),
+     laptopNumber: laptopNumberInput.value()
+   }
+   console.log(data);
+   var ref = database.ref('borrowed-laptops');
+   ref.push(data);
+ }
 
-  var data = {
-    name: "DAT",
-    score: 12
-  }
-  ref.push(data);
-}
+ // function increaseScore() {
+ //   score++;
+ // }
 
-function submitScore() {
-  var data = {
-    initials: initialInput.value(),
-    score: score
-  }
-  console.log(data);
-  var ref = database.ref('scores');
- ref.push(data);
-}
-
-function increaseScore() {
-  score++;
-}
-
-function draw() {
-  background(0);
-  textAlign(CENTER);
-  textSize(32);
-  fill(255);
-  text(score, width / 2, height / 2);
-}
+ function draw() {
+   // background(0);
+   // textAlign(CENTER);
+   // textSize(32);
+   // fill(255);
+   // text("hi", width / 2, height / 2);
+ }
