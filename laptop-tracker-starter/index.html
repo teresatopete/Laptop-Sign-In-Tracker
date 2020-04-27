@@ -37,7 +37,7 @@
   <span1 onclick="newElement()" ></span1>
   <input type="text" id="emailInput" placeholder="Email address...">
   <span2 onclick="newElement()">
-  <input type="laptopnumber" id="numberinput" placeholder="Laptop number">
+  <input type="text" id="laptopnumberinput" placeholder="Laptop number">
   <span3 onclick="newElement()" class="addBtn">Add</span3>
 </div>
 
@@ -86,11 +86,11 @@ function newElement() {
   var nameInputValue = document.getElementById("nameInput").value;
   var emailInputValue = document.getElementById("emailInput").value;
   var laptopnumberInputValue = document.getElementById("emailInput").value;
-  var info = document.createTextNode(nameInputValue+ " "+emailInputValue" "+laptopnumberInputValue);
+  var info = document.createTextNode(nameInputValue+ " "+emailInputValue+" "+laptopnumberInputValue);
 
   var data = {
     name: nameInputValue,
-    email: emailInputValue
+    email: emailInputValue,
     laptopnumber: laptopnumberInputValue
   }
 
@@ -118,8 +118,8 @@ function newElement() {
   li.appendChild(span2);
   var span3 = document.createElement("SPAN3");
   var txt = document.createTextNode("\u00D7");
-  span2.className = "close";
-  span2.appendChild(txt);
+  span3.className = "close";
+  span3.appendChild(txt);
   li.appendChild(span3);
 
   for (i = 0; i < close.length; i++) {
