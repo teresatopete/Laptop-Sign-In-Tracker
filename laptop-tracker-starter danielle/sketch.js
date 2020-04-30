@@ -10,7 +10,7 @@ function setup() {
   emailButton = createButton('submit');
   submitButton = createButton('submit');
   clikctwobutton = createButton('click');
-  thirdInput = createInput(' Date');
+  thirdInput = createInput(' Retun Date');
   dateButton = createButton('submit');
   submitButton.parent('game');
   submitButton.mousePressed(submitScore);
