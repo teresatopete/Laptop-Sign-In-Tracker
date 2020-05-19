@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="style.css">
+<title>Laptop Checkout</title>
+<style><h1 style="font-size:600%;">This is a heading</h1> body {padding: 0; margin: 0;} </style>
+<script src="libraries/p5.min.js"></script>
+<script src="libraries/p5.dom.min.js"></script>
+<script src="libraries/p5.sound.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/firebasejs/7.13.2/firebase.js"></script>
+<!-- <script src="sketch.js"></script> -->
+</head>
+<body onload="dataConnect()">
+
+  <script>
+ function dataConnect() {
+   var config = {
+     apiKey: "AIzaSyBVeaJnUZTjobwiVFD_cow0pY9AiTijXNE",
+     authDomain: "laptop-charger-tracker.firebaseapp.com",
+     databaseURL: "https://laptop-charger-tracker.firebaseio.com",
+     projectId: "laptop-charger-tracker",
+     storageBucket: "laptop-charger-tracker.appspot.com",
+     messagingSenderId: "965113615786",
+     appId: "1:965113615786:web:c13f336048ec7d02ba87d3",
+     measurementId: "G-QQN1ZCH0YB"
+   };
+
+    firebase.initializeApp(config);
+    database = firebase.database();
+
+    var ref = database.ref('borrowed-laptops');
+    ref.on('value', gotData, errData);
+
+ }
+
+ function gotData(data) {
+    // console.log(data.val());
+     var laptops = data.val();
+     var keys = Object.keys(laptops);
+     console.log(keys);
+     for (var i = 0; i < keys.length; i++) {
+       var k = keys[i];
+       var name = laptops[k].name;
+       var email = laptops[k].email;
+       var laptopnumber = laptops[k].laptopnumber;
+
+    addRowToPage(name, email, laptopnumber);
+       }
+   }
+
+   function errData(err) {
+     console.log('Error!');
+     console.log(err);
+   }
+
+ </script>
+
+
+<div id="myDIV" class="header">
+  <h2 style="margin:5px">Chargers and Laptops</h2>
+  <input type="text" id="nameInput" placeholder="Name...">
+  <span1 onclick="newElement()" ></span1>
+  <input type="text" id="emailInput" placeholder="Email address...">
+  <span2 onclick="newElement()" class="addBtn">Add</span2>
+  <input type="text" id="laptopnumberInput" placeholder="Laptop number...">
+  <span3 onclick="newElement()" ></span3>
+</div>
+
+<ul id="myUL">
+  <li>List Names</li>
+
+</ul>
+
+<script>
+var myNodelist = document.getElementsByTagName("LI");
+var i;
+for (i = 0; i < myNodelist.length; i++) {
+  var span1 = document.createElement("SPAN1");
+  var span2 = document.createElement("SPAN2");
+  var span3 = document.createElement("SPAN3");
+  var txt = document.createTextNode("\u00D7");
+  span1.className = "close";
+  span1.appendChild(txt);
+  myNodelist[i].appendChild(span1);
+  span2.className = "close";
+  span2.appendChild(txt);
+  myNodelist[i].appendChild(span2);
+  span3.className = "close";
+  span3.appendChild(txt);
+  myNodelist[i].appendChild(span3);
+}
+
+var close = document.getElementsByClassName("close");
+var i;
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function() {
+    var div = this.parentElement;
+    div.style.display = "none";
+  }
+}
+
+var list = document.querySelector('ul');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'LI') {
+    ev.target.classList.toggle('checked');
+  }
+}, false);
+
+function newElement() {
+  var nameInputValue = document.getElementById("nameInput").value;
+  var emailInputValue = document.getElementById("emailInput").value;
+  var laptopnumberValue = document.getElementById("laptopnumberInput").value;
+
+  var data = {
+    name: nameInputValue,
+    email: emailInputValue,
+    laptopnumber: laptopnumberValue
+  }
+
+  console.log(data);
+  var ref = database.ref('borrowed-laptops');
+  ref.push(data);
+
+  if (nameInputValue === ''|| emailInputValue === '' || laptopnumberValue === '') { //
+    alert("Your form is missing information");
+  } else {
+    addRowToPage(nameInputValue, emailInputValue, laptopnumberValue);
+  }
+  document.getElementById("emailInput").value = "";
+
+
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function() {
+      var div = this.parentElement;
+      div.style.display = "none";
+    }
+  }
+}
+function addRowToPage(nameInputValue, emailInputValue, laptopnumberValue) {
+var span1 = document.createElement("SPAN");
+var txt = document.createTextNode("\u00D7");
+var li = document.createElement("li");
+var info = document.createTextNode(nameInputValue+ " "+emailInputValue+ " "+laptopnumberValue);
+li.appendChild(info);
+span1.className = "close";
+span1.appendChild(txt);
+li.appendChild(span1);
+var span2 = document.createElement("SPAN2");
+var txt = document.createTextNode("\u00D7");
+span2.className = "close";
+span2.appendChild(txt);
+li.appendChild(span2);
+var span3 = document.createElement("SPAN3");
+var txt = document.createTextNode("\u00D7");
+span2.className = "close";
+span2.appendChild(txt);
+li.appendChild(span3);
+document.getElementById("myUL").appendChild(li);
+}
+</script>
+
+
+</body>
+</html>
