@@ -26,10 +26,36 @@
      measurementId: "G-QQN1ZCH0YB"
    };
 
-   firebase.initializeApp(config);
+    firebase.initializeApp(config);
     database = firebase.database();
+
+    var ref = database.ref('borrowed-laptops');
+    ref.on('value', gotData, errData);
+
  }
+
+ function gotData(data) {
+    // console.log(data.val());
+     var laptops = data.val();
+     var keys = Object.keys(laptops);
+     console.log(keys);
+     for (var i = 0; i < keys.length; i++) {
+       var k = keys[i];
+       var name = laptops[k].name;
+       var email = laptops[k].email;
+       var laptopnumber = laptops[k].laptopnumber;
+
+    addRowToPage(name, email, laptopnumber);
+       }
+   }
+
+   function errData(err) {
+     console.log('Error!');
+     console.log(err);
+   }
+
  </script>
+
 
 <div id="myDIV" class="header">
   <h2 style="margin:5px">Chargers and Laptops</h2>
@@ -82,12 +108,9 @@ list.addEventListener('click', function(ev) {
 }, false);
 
 function newElement() {
-  var li = document.createElement("li");
   var nameInputValue = document.getElementById("nameInput").value;
   var emailInputValue = document.getElementById("emailInput").value;
   var laptopnumberValue = document.getElementById("laptopnumberInput").value;
-  var info = document.createTextNode(nameInputValue+ " "+emailInputValue+ " "+laptopnumberValue);
-
 
   var data = {
     name: nameInputValue,
@@ -99,29 +122,13 @@ function newElement() {
   var ref = database.ref('borrowed-laptops');
   ref.push(data);
 
-  li.appendChild(info);
-  if (nameInputValue === ''|| emailInputValue === '') { //
+  if (nameInputValue === ''|| emailInputValue === '' || laptopnumberValue === '') { //
     alert("Your form is missing information");
   } else {
-    document.getElementById("myUL").appendChild(li);
+    addRowToPage(nameInputValue, emailInputValue, laptopnumberValue);
   }
   document.getElementById("emailInput").value = "";
 
-  var span1 = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span1.className = "close";
-  span1.appendChild(txt);
-  li.appendChild(span1);
-  var span2 = document.createElement("SPAN2");
-  var txt = document.createTextNode("\u00D7");
-  span2.className = "close";
-  span2.appendChild(txt);
-  li.appendChild(span2);
-  var span3 = document.createElement("SPAN3");
-  var txt = document.createTextNode("\u00D7");
-  span2.className = "close";
-  span2.appendChild(txt);
-  li.appendChild(span3);
 
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function() {
@@ -130,7 +137,29 @@ function newElement() {
     }
   }
 }
+function addRowToPage(nameInputValue, emailInputValue, laptopnumberValue) {
+var span1 = document.createElement("SPAN");
+var txt = document.createTextNode("\u00D7");
+var li = document.createElement("li");
+var info = document.createTextNode(nameInputValue+ " "+emailInputValue+ " "+laptopnumberValue);
+li.appendChild(info);
+span1.className = "close";
+span1.appendChild(txt);
+li.appendChild(span1);
+var span2 = document.createElement("SPAN2");
+var txt = document.createTextNode("\u00D7");
+span2.className = "close";
+span2.appendChild(txt);
+li.appendChild(span2);
+var span3 = document.createElement("SPAN3");
+var txt = document.createTextNode("\u00D7");
+span2.className = "close";
+span2.appendChild(txt);
+li.appendChild(span3);
+document.getElementById("myUL").appendChild(li);
+}
 </script>
+
 
 </body>
 </html>
